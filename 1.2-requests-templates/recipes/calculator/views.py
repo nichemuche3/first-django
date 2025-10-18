@@ -28,3 +28,20 @@ DATA = {
 #     'ингредиент2': количество2,
 #   }
 # }
+def recipes_view(request, dish):
+    if dish not in DATA:
+        return render(request, 'calculator/index.html', {'recipe': {}})
+    
+    recipe = DATA[dish].copy()
+    servings = request.GET.get('servings')
+    
+    if servings and servings.isdigit():
+        servings = int(servings)
+        for ingredient in recipe:
+            recipe[ingredient] *= servings
+    
+    context = {
+        'recipe': recipe
+    }
+    
+    return render(request, 'calculator/index.html', context)
