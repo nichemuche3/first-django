@@ -7,17 +7,35 @@
         <div class="header">
             <h1><a href="/books">Каталог</a></h1>
         </div>
+        
+        {% if current_date %}
         <div class="row">
-            <div class="book col-md-4">
-                <h2>Сияние</h2>
-                <p>Автор: Стивен Кинг</p>
-                <p>Дата публикации: 2018-09-10</p>
+            <div class="col-md-12">
+                {% if prev_date %}
+                    <a href="{% url 'books_by_date' prev_date|date:'Y-m-d' %}">
+                        < {{ prev_date }}
+                    </a>
+                {% endif %}
+                {% if next_date %}
+                    <a href="{% url 'books_by_date' next_date|date:'Y-m-d' %}">
+                        {{ next_date }} >
+                    </a>
+                {% endif %}
             </div>
+        </div>
+        {% endif %}
+
+        <div class="row">
+            {% for book in books %}
             <div class="book col-md-4">
-                <h2>1984</h2>
-                <p>Автор: Джордж Оруэл</p>
-                <p>Дата публикации: 2015-03-11</p>
+                <h2>{{ book.name }}</h2>
+                <p>Автор: {{ book.author }}</p>
+                {% if not current_date %}
+                    <p>Дата публикации: {{ book.pub_date }}</p>
+                    <p><a href="{% url 'books_by_date' book.pub_date|date:'Y-m-d' %}">По дате</a></p>
+                {% endif %}
             </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
