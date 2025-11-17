@@ -80,11 +80,17 @@ WSGI_APPLICATION = 'django_testing.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'netology_django_testing',
-        'HOST': '127.0.0.1',
+        'NAME': 'django_testing', 
+        'HOST': 'localhost',
         'PORT': '5432',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'OPTIONS': {
+            'client_encoding': 'UTF8',
+    }
     }
 }
+MAX_STUDENTS_PER_COURSE = 20
 
 
 # Password validation
